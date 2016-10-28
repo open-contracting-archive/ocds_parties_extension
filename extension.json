@@ -1,0 +1,6 @@
+{
+  "name": "Contract Parties (Organization structure)",
+  "description": "The Contract Parties extension provides for the representation of a wide range of organizations and other parties involved in a contracting process. It introduces a top-level block for parties, and updates the approach to referencing party information.",
+  "compatibility": ">=1.0.0",
+  "dependencies": [""]
+}

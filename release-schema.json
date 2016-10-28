@@ -1,0 +1,105 @@
+
+{
+
+    "properties": {
+        "parties": {
+            "title": "Parties",
+            "description": "Information on the parties who are involved in the contracting process and their roles, e.g. buyer, procuring party, supplier etc. Organization references elsewhere in the schema refer to this list of parties.",
+            "type": "array",
+            "mergeStrategy": "arrayMergeById",
+            "mergeOptions": {
+                "idRef": "id"
+            },
+            "items": {
+                "$ref": "#/definitions/Organization"
+            },
+            "uniqueItems": true
+        },
+        "buyer": {
+            "$ref": "#/definitions/OrganizationReference"
+        }
+    },
+    "definitions": {
+        "OrganizationReference": {
+            "title": "Organization reference",
+            "type": "object",
+            "description": "The id and name of the party being referenced. Used to cross-reference to the parties section",
+            "required": [
+                "id",
+                "name"
+            ],
+            "properties": {
+                "id": {
+                    "title": "Organization ID",
+                    "description": "The id of the party being referenced. This must match the id of an party in the parties section",
+                    "type": [
+                        "string",
+                        "integer"
+                    ],
+                    "mergeStrategy": "overwrite"
+                },
+                "name": {
+                    "title": "Organization name",
+                    "description": "The name of the party being referenced. This must match the name of an party in the parties section",
+                    "type": [
+                        "string",
+                        "null"
+                    ],
+                    "mergeStrategy": "ocdsVersion"
+                }
+            },
+            "patternProperties": {
+                "^(description_(((([A-Za-z]{2,3}(-([A-Za-z]{3}(-[A-Za-z]{3}){0,2}))?)|[A-Za-z]{4}|[A-Za-z]{5,8})(-([A-Za-z]{4}))?(-([A-Za-z]{2}|[0-9]{3}))?(-([A-Za-z0-9]{5,8}|[0-9][A-Za-z0-9]{3}))*(-([0-9A-WY-Za-wy-z](-[A-Za-z0-9]{2,8})+))*(-(x(-[A-Za-z0-9]{1,8})+))?)|(x(-[A-Za-z0-9]{1,8})+)))$": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            }
+        },
+        "Tender": {
+            "properties": {
+                "tenderers": {
+                    "items": {
+                        "$ref": "#/definitions/OrganizationReference"
+                    }
+                },
+                "procuringEntity": {
+                    "$ref": "#/definitions/OrganizationReference"
+                }
+            }
+        },
+        "Award": {
+            "properties": {
+                "suppliers": {
+                    "items": {
+                        "$ref": "#/definitions/OrganizationReference"
+                    }
+                }
+            }
+        },
+        "Organization": {
+            "properties": {
+                "id": {
+                    "title": "Entity ID",
+                    "description": "The ID used for cross-referencing to the parties section. This field should be composed of {identifier.scheme}-{identifier.id}-{department-identifier}.",
+                    "type": [
+                        "string",
+                        "integer"
+                    ],
+                    "mergeStrategy": "overwrite"
+                },
+                "roles": {
+                    "title": "Entity roles",
+                    "description": "The party's role(s) in the contracting process. Role(s) should be taken from the [partyRole codelist](http://standard.open-contracting.org/latest/en/schema/codelists/#party-role). Values from the provided codelist should be used wherever possible, though extended values can be provided if the codelist does not have a relevant code.",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "mergestrategy": "ocdsOmit"
+                }
+            }
+        }
+    }
+
+}
