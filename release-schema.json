@@ -1,118 +1,122 @@
-
 {
-
-    "properties": {
-        "parties": {
-            "title": "Parties",
-            "description": "Information on the parties who are involved in the contracting process and their roles, e.g. buyer, procuring party, supplier etc. Organization references elsewhere in the schema refer to this list of parties.",
-            "type": "array",
-            "mergeStrategy": "arrayMergeById",
-            "mergeOptions": {
-                "idRef": "id"
-            },
-            "items": {
-                "$ref": "#/definitions/Organization"
-            },
-            "uniqueItems": true
-        },
-        "buyer": {
-            "$ref": "#/definitions/OrganizationReference"
-        }
+  "properties": {
+    "parties": {
+      "title": "Parties",
+      "description": "Information on the parties who are involved in the contracting process and their roles, e.g. buyer, procuring party, supplier etc. Organization references elsewhere in the schema refer to this list of parties.",
+      "type": "array",
+      "mergeStrategy": "arrayMergeById",
+      "mergeOptions": {
+        "idRef": "id"
+      },
+      "items": {
+        "$ref": "#/definitions/Organization"
+      },
+      "uniqueItems": true
     },
-    "definitions": {
-        "OrganizationReference": {
-            "title": "Organization reference",
-            "type": "object",
-            "description": "The id and name of the party being referenced. Used to cross-reference to the parties section",
-            "required": [
-                "id",
-                "name"
-            ],
-            "properties": {
-                "id": {
-                    "title": "Organization ID",
-                    "description": "The id of the party being referenced. This must match the id of an entry in the parties section",
-                    "type": [
-                        "string",
-                        "integer"
-                    ],
-                    "mergeStrategy": "overwrite"
-                },
-                "name": {
-                    "title": "Organization name",
-                    "description": "The name of the party being referenced. This must match the name of an entry in the parties section",
-                    "type": [
-                        "string",
-                        "null"
-                    ],
-                    "mergeStrategy": "ocdsVersion"
-                },
-                "additionalIdentifiers": { 
-                    "title":"Additional identifiers",
-                    "description": "A list of additional / supplemental identifiers for the organization, using the [organization identifier guidance](http://standard.open-contracting.org/latest/en/schema/identifiers/). This could be used to provide an internally used identifier for this organization in addition to the primary legal entity identifier.",
-                    "type": "array",
-                    "deprecated":{
-                        "deprecatedVersion":"1.1",
-                        "description":"From version 1.1, organisations should be referenced by their identifier and name in a document, and additional identifiers for an organisation should be provided in the relevant cross-referenced entry parties section at the top level of a release."
-                    },
-                    "items": { "$ref": "#/definitions/Identifier" },
-                    "uniqueItems": true
-                },
-                "address": { 
-                        "deprecated":{
-                            "deprecatedVersion":"1.1",
-                            "description":"From version 1.1, organisations should be referenced by their identifier and name in a document, and address information should only be provided in the relevant cross-referenced entry parties section at the top level of a release."
-                        },
-                    "$ref": "#/definitions/Address" 
-                },
-                "contactPoint": { 
-                    "deprecated":{
-                        "deprecatedVersion":"1.1",
-                        "description":"From version 1.1, organisations should be referenced by their identifier and name in a document, and contact point information for an organisation should be provided in the relevant cross-referenced entry parties section at the top level of a release."
-                    },
-                "$ref": "#/definitions/ContactPoint" }
-            }
-        },
-        "Tender": {
-            "properties": {
-                "tenderers": {
-                    "items": {
-                        "$ref": "#/definitions/OrganizationReference"
-                    }
-                },
-                "procuringEntity": {
-                    "$ref": "#/definitions/OrganizationReference"
-                }
-            }
-        },
-        "Award": {
-            "properties": {
-                "suppliers": {
-                    "items": {
-                        "$ref": "#/definitions/OrganizationReference"
-                    }
-                }
-            }
-        },
-        "Organization": {
-            "properties": {
-                "id": {
-                    "title": "Entity ID",
-                    "description": "The ID used for cross-referencing to the parties section. This field may be built with the following structure {identifier.scheme}-{identifier.id}(-{department-identifier}).",
-                    "type": [
-                        "string"
-                    ]
-                },
-                "roles": {
-                    "title": "Entity roles",
-                    "description": "The party's role(s) in the contracting process. Role(s) should be taken from the [partyRole codelist](http://standard.open-contracting.org/latest/en/schema/codelists/#party-role). Values from the provided codelist should be used wherever possible, though extended values can be provided if the codelist does not have a relevant code.",
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
-                }
-            }
-        }
+    "buyer": {
+      "$ref": "#/definitions/OrganizationReference"
     }
-
+  },
+  "definitions": {
+    "OrganizationReference": {
+      "title": "Organization reference",
+      "type": "object",
+      "description": "The id and name of the party being referenced. Used to cross-reference to the parties section",
+      "required": [
+        "id",
+        "name"
+      ],
+      "properties": {
+        "id": {
+          "title": "Organization ID",
+          "description": "The id of the party being referenced. This must match the id of an entry in the parties section",
+          "type": [
+            "string",
+            "integer"
+          ],
+          "mergeStrategy": "overwrite"
+        },
+        "name": {
+          "title": "Organization name",
+          "description": "The name of the party being referenced. This must match the name of an entry in the parties section",
+          "type": [
+            "string",
+            "null"
+          ],
+          "mergeStrategy": "ocdsVersion"
+        },
+        "additionalIdentifiers": {
+          "title": "Additional identifiers",
+          "description": "(Deprecated outside the parties section) A list of additional / supplemental identifiers for the organization, using the [organization identifier guidance](http://standard.open-contracting.org/latest/en/schema/identifiers/). This could be used to provide an internally used identifier for this organization in addition to the primary legal entity identifier.",
+          "type": "array",
+          "deprecated": {
+            "deprecatedVersion": "1.1",
+            "description": "From version 1.1, organisations should be referenced by their identifier and name in a document, and additional identifiers for an organisation should be provided in the relevant cross-referenced entry parties section at the top level of a release."
+          },
+          "items": {
+            "$ref": "#/definitions/Identifier"
+          },
+          "uniqueItems": true
+        },
+        "address": {
+          "title":"Address",
+          "description":"(Deprecated outside the parties section)",
+          "deprecated": {
+            "deprecatedVersion": "1.1",
+            "description": "From version 1.1, organisations should be referenced by their identifier and name in a document, and address information should only be provided in the relevant cross-referenced entry parties section at the top level of a release."
+          },
+          "$ref": "#/definitions/Address"
+        },
+        "contactPoint": {
+          "title":"Contact point",
+          "description":"(Deprecated outside the parties section)",
+          "deprecated": {
+            "deprecatedVersion": "1.1",
+            "description": "From version 1.1, organisations should be referenced by their identifier and name in a document, and contact point information for an organisation should be provided in the relevant cross-referenced entry parties section at the top level of a release."
+          },
+          "$ref": "#/definitions/ContactPoint"
+        }
+      }
+    },
+    "Tender": {
+      "properties": {
+        "tenderers": {
+          "items": {
+            "$ref": "#/definitions/OrganizationReference"
+          }
+        },
+        "procuringEntity": {
+          "$ref": "#/definitions/OrganizationReference"
+        }
+      }
+    },
+    "Award": {
+      "properties": {
+        "suppliers": {
+          "items": {
+            "$ref": "#/definitions/OrganizationReference"
+          }
+        }
+      }
+    },
+    "Organization": {
+      "properties": {
+        "id": {
+          "title": "Entity ID",
+          "description": "The ID used for cross-referencing to the parties section. This field may be built with the following structure {identifier.scheme}-{identifier.id}(-{department-identifier}).",
+          "type": [
+            "string"
+          ]
+        },
+        "roles": {
+          "title": "Entity roles",
+          "description": "The party's role(s) in the contracting process. Role(s) should be taken from the [partyRole codelist](http://standard.open-contracting.org/latest/en/schema/codelists/#party-role). Values from the provided codelist should be used wherever possible, though extended values can be provided if the codelist does not have a relevant code.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
 }
